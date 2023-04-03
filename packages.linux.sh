@@ -12,6 +12,7 @@ fi
 
 want_apt_pkgs=(
     build-essential
+    clangd
     git
     python3
     python3-pip
