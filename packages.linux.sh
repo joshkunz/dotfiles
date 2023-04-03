@@ -13,6 +13,8 @@ fi
 want_apt_pkgs=(
     build-essential
     git
+    python3
+    python3-pip
 )
 
 sudo apt-get install -y "${want_apt_pkgs[@]}"
@@ -37,3 +39,9 @@ want_brew_pkgs=(
 
 brew update
 brew install "${want_brew_pkgs[@]}"
+
+want_python_pkgs=(
+    pynvim
+)
+
+pip3 install "${want_python_pkgs[@]}"

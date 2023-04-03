@@ -107,7 +107,7 @@ ensure_lsp_capabilities(require('cmp_nvim_lsp').default_capabilities())
 lspconfig = require('lspconfig')
 
 lspconfig.clangd.setup({
-    cmd = {"clangd-13", "--background-index"},
+    cmd = {"clangd", "--background-index"},
     init_options = { clangdFileStatus = true },
     capabilities = lsp_capabilities,
 })
