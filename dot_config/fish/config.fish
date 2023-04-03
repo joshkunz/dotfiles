@@ -43,9 +43,8 @@ function fish_user_key_bindings
 end
 
 #### Path Updates ####
+set -p PATH /home/linuxbrew/.linuxbrew/bin
 # Grab out the bash-specific path modifications for rust.
-set -l _bash_path (bash -c 'source ~/.cargo/env; env' | rg '^PATH=' | tail -c+6 | tr ":" \n)
-set PATH $_bash_path $PATH
 set PATH /usr/local/bin $PATH
 set PATH /usr/local/sbin $PATH
 set PATH ~/bin $PATH
@@ -56,7 +55,8 @@ set PATH $HOME/opt/zig-linux-x86_64-0.4.0 $PATH
 set -p PATH ~/go/bin 
 set -p PATH ~/.local/texlive/2021/bin/x86_64-linux
 
-set -p PATH /home/linuxbrew/.linuxbrew/bin
+set -l rust_path (env - bash -c 'source ~/.cargo/env; env' | rg '^PATH=' | tail -c+6 | tr ":" \n)
+set -a PATH $rust_path
 
 set fish_PKG_CONFIG_PATH
 set -a fish_PKG_CONFIG_PATH "/usr/share/pkgconfig"
