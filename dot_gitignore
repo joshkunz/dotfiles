@@ -1,0 +1,11 @@
+*.DS_Store
+*.swp
+*.swi
+*.swo
+.virtualenv*
+*.pyc
+*.o
+.vscode/**
+
+# Bazel Paths
+bazel-*

@@ -1,0 +1,18 @@
+readme.md
+packages.linux.sh
+
+# Linux-only configuration files 
+{{- if ne .chezmoi.os "linux" }}
+
+.Xresources
+
+{{- end }}
+
+# Apollo-only configuration
+{{- if ne .chezmoi.hostname "apollo" }}
+
+.config/fish/functions/beets-shell.fish
+.config/fish/functions/cephmount.fish
+.config/fish/functions/cephshell.fish
+
+{{- end }}

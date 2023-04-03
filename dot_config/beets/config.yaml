@@ -1,0 +1,31 @@
+plugins:
+  - inline
+  - missing
+  - extrafiles
+directory: /tank/music
+import:
+    write: yes
+    move: yes
+paths: 
+    default: "%if{$albumartist,$albumartist,$artist}/%if{$year,$year }${album}/%if{$multidisc,%if{$disctitle,$disc $disctitle,$disc}/}$track $title"
+    comp: "compilations/%if{$year,$year }${album}/%if{$multidisc,%if{$disctitle,$disc $disctitle,$disc}/}$track $title"
+    singleton: non-album/$artist/$title
+
+item_fields:
+    multidisc: 1 if disctotal > 1 else 0
+
+extrafiles:
+  patterns:
+    all: '*.*'
+
+replace:
+    '[\\/]': _
+    '^\.': _
+    '[\x00-\x1f]': _
+    '[<>:"\?\*\|]': _
+    '’': "'"
+    '[“”]': '"'
+    '″': '"'
+    '…': '...'
+    '\.$': '.'
+    ':': ':'
