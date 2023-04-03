@@ -15,12 +15,16 @@ want_apt_pkgs=(
     git
 )
 
-sudo apt-get install "${want_apt_pkgs[@]}"
+sudo apt-get install -y "${want_apt_pkgs[@]}"
 
 if ! which brew >/dev/null; then
     # Install homebrew
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    env NONINTERACTIVE=true \
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
+
+# Make sure the linuxbrew environment is sourced
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 want_brew_pkgs=(
     fd
