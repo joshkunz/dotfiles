@@ -1,0 +1,13 @@
+{{- $is_work := stat (joinPath .chezmoi.homeDir ".work") -}}
+
+data:
+{{- if $is_work }}
+    work: true
+    codeRoot: "$HOME/stripe"
+    email: {{ onepasswordRead "op://Private/Josh Kunz/email" }}
+    gitHost: {{ onepasswordRead "op://Private/Git/host" }}
+{{- else }}
+    work: false
+    codeRoot: "$HOME/code"
+    email: josh@kunz.xyz
+{{- end }}

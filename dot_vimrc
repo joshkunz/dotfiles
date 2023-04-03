@@ -45,7 +45,7 @@ set modelines=1
 "set backupdir=~/.cache/vim
 
 " Maybe
-set cursorline 
+set cursorline
 " set cursorbind
 set showmatch
 
@@ -73,6 +73,19 @@ set expandtab
 " nmap vj <C-w>j
 " nmap vk <C-w>k
 
+function! Scratch()
+    split
+    noswapfile hide enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    "setlocal nobuflisted
+    "lcd ~
+    file scratch
+endfunction
+
+" :Scratch - Create a new scratch buffer that is not backed by a file.
+command! Scratch call Scratch()
+
 
 " For pandoc syn plugin
 let g:pandoc_no_folding = 1
@@ -90,6 +103,10 @@ augroup rcCmd
     autocmd BufWinEnter *.{md,mkd,markdown} setl spell
     autocmd BufWinEnter *.tex setl noautoindent spell syntax=tex
     autocmd BufWinEnter *.gnu setl syn=gnuplot
+
+    autocmd BufWinEnter *.c setl colorcolumn=80
+    autocmd BufWinEnter *.cc setl colorcolumn=80
+    autocmd BufWinEnter *.h setl colorcolumn=80
 
     autocmd FileType gitcommit setl spell
     autocmd FileType Makefile setl noexpandtab
@@ -115,8 +132,9 @@ augroup rcCmd
     autocmd BufRead *.clisp setl syn=lisp
     autocmd BufRead *.gvpr setl syn=gvpr
     autocmd BufRead *.nc setl syn=tcl
+    autocmd BufRead *.sky setl syn=python
 
     autocmd BufRead *.js,*.jsx,*.ts,*.tsx   setl tabstop=2 shiftwidth=2
     " Needed for Parcel autoreload
-    autocmd BufRead *.js,*.jsx,*.ts,*.tsx   setl backupcopy=yes 
+    autocmd BufRead *.js,*.jsx,*.ts,*.tsx   setl backupcopy=yes
 augroup END

@@ -1,0 +1,7 @@
+function gor
+    set root "{{- .codeRoot -}}"
+    set picked (ls $root | fzf)
+    if not test -z "$picked"
+        pushd $root/$picked
+    end
+end

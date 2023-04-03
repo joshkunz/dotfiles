@@ -1,0 +1,70 @@
+[core]
+    excludesfile = ~/.gitignore
+
+[user]
+	name = Josh Kunz
+	email = {{ .email }}
+{{- if not .work }}
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMb+CIDdKHtkvn+4jtCum0LmM1u3Jfswp01sifwrnbh7mvpCKySbcjLGMVC2IfKsoHtdy60y1OQFgYPTTOukA0NTGd32gp0NjRR6XRzgAAmoNXtmkojqW7TWd6XGDwi7Nc9Q6O3Cfsrb85OoXJNqs5tcSLAKkqM9P3YKE73rWoN9yDJk4OUq1whvN3Yc15b1+uNabpZr8yFdOAGD+SMluXk0+0FOEVA6U3s3vsvxDIENz8M0SHS0WsOUPxB4Q1hkYw1nKUP3adN7i3/PeNZRIwx4Gie7wpJ9t+FZNoP4O1hdr9hGVBGu6sbgM7rq1yBmkW3Lj/yRbCXrlzCtVyk5OP
+{{- end }}
+
+[color]
+    ui = auto
+
+[push]
+    default = upstream
+    autoSetupRemote = true
+
+[pull]
+    rebase = true
+
+[merge]
+    tool = vimdiff
+
+[mergetool]
+    prompt = false
+
+[mergetool "vimdiff"]
+    cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+
+[alias]
+    last = !git --no-pager log -n 1 --pretty=\"format:%h\"
+    pl = log --pretty=\"tformat:%C(auto)%h %>(8,trunc)%ar %>(10,trunc)%C(bold green)%an%Creset %s%C(auto)%d\"
+    w = diff --minimal --color-words
+    # "Show Pull Diff"
+    pdiff = diff -b "@{1}"
+    p = push --force-with-lease
+    pu = push --set-upstream origin HEAD
+    b = branch
+    co = checkout
+    fish = !fish -c
+    reword = commit --amend
+    cob = fish git-cob
+
+{{- if .work }}
+    dance = fish git-dance
+    deletemerged = fish git-deletemerged
+    rr = fish git-rr
+    ugh = fish git-ugh
+{{- end }}
+
+{{- if .gitHost }}
+# For custom git hosts
+[hub]
+	host = {{ .gitHost }}
+{{- end }}
+
+{{- if not .work }}
+# For GPG Signing of commits
+[init]
+	defaultBranch = main
+
+[credential]
+	helper = cache
+
+[commit]
+	gpgsign = true
+
+[gpg]
+	format = ssh
+{{- end }}

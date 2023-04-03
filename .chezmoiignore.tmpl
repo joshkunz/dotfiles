@@ -1,7 +1,7 @@
 readme.md
 packages.linux.sh
 
-# Linux-only configuration files 
+# Linux-only configuration files
 {{- if ne .chezmoi.os "linux" }}
 
 .Xresources
@@ -15,4 +15,16 @@ packages.linux.sh
 .config/fish/functions/cephmount.fish
 .config/fish/functions/cephshell.fish
 
+{{- end }}
+
+# Work only config
+{{- if not .work }}
+.config/fish/conf.d/work_custom.fish
+{{- end }}
+
+# Personal only config
+{{- if .work }}
+.config/beets
+# We have custom overrides for this, and don't use bazelisk
+.config/fish/functions/bazel.fish
 {{- end }}

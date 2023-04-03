@@ -11,7 +11,7 @@ function _tmux_active_sessions
     set -l fmt '#{session_last_attached} #{session_name} #{session_windows}'
     for session_line in (tmux list-sessions -F $fmt 2>/dev/null | sort -rn)
         echo $session_line | read -l session_last_attached session_name session_windows
-        set -l attached_str (date -d @$session_last_attached +"%m/%d %H:%M")
+        set -l attached_str (date -r $session_last_attached +"%m/%d %H:%M")
         set -l desc "$session_windows windows, last $attached_str"
         printf "%s\t%s\n" $session_name $desc
     end
