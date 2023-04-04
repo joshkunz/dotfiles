@@ -8,6 +8,13 @@ packages.linux.sh
 
 {{- end }}
 
+{{- if .is_server }}
+# Interactive only configuration
+
+.config/alacritty
+
+{{- end }}
+
 # Apollo-only configuration
 {{- if ne .chezmoi.hostname "apollo" }}
 
