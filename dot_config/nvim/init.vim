@@ -9,7 +9,6 @@ require('packer').startup(function(use)
     use { 'nvim-lualine/lualine.nvim',
           requires = {
               { 'nvim-tree/nvim-web-devicons', opt = true },
-              { 'linrongbin16/lsp-progress.nvim' },
         }
     }
 
@@ -34,11 +33,7 @@ require('packer').startup(function(use)
         },
     }
     use 'kassio/neoterm'
-
-    --use {
-    --    'glepnir/lspsaga.nvim',
-    --    branch = 'main',
-    --}
+    use 'mhartington/formatter.nvim'
 end)
 
 function bind_leader(key, f)
@@ -179,8 +174,6 @@ require('nvim-treesitter.configs').setup({
     }
 })
 
-require('lsp-progress').setup()
-
 require('lualine').setup({
     options = {
         theme = 'solarized_dark',
@@ -194,12 +187,28 @@ require('lualine').setup({
             fmt = function(str) return str:sub(1,1) end,
         }},
         lualine_b = { 
-            'branch', 
+            'branch',
             'diff',
             'diagnostics',
         },
     },
 })
+
+
+local fmtutil = require('formatter.util')
+
+require('formatter').setup {
+    filetype = {
+        go = { require('formatter.filetypes.go').gofmt },
+        cpp = { require('formatter.filetypes.cpp').clangformat },
+        terraform = { require('formatter.filetypes.terraform').terraformfmt },
+        fish = { require('formatter.filetypes.fish').fishindent },
+        yaml = { require('formatter.filetypes.yaml').pyyaml },
+        ["*"] = {
+            require('formatter.filetypes.any').remove_trailing_whitespace,
+        },
+    },
+}
 EOF
 
 source ~/.vimrc
