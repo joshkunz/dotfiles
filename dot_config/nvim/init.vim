@@ -12,7 +12,7 @@ require('packer').startup(function(use)
         }
     }
 
-    use { 
+    use {
         'nvim-telescope/telescope.nvim',
         requires = {
             'nvim-lua/plenary.nvim',
@@ -186,7 +186,7 @@ require('lualine').setup({
             'mode',
             fmt = function(str) return str:sub(1,1) end,
         }},
-        lualine_b = { 
+        lualine_b = {
             'branch',
             'diff',
             'diagnostics',
@@ -200,7 +200,21 @@ local fmtutil = require('formatter.util')
 require('formatter').setup {
     filetype = {
         go = { require('formatter.filetypes.go').gofmt },
-        cpp = { require('formatter.filetypes.cpp').clangformat },
+        cpp = {
+            function()
+                return {
+                    exe = "clang-format",
+                    -- Pick up the location of the buffer we're modifying
+                    -- so clang format can find .clang-format in parent directories
+                    cwd = fmtutil.get_current_buffer_file_dir(),
+                    args = {
+                        "-assume-filename",
+                        fmtutil.escape_path(fmtutil.get_current_buffer_file_name()),
+                    },
+                    stdin = true,
+                }
+            end,
+        },
         terraform = { require('formatter.filetypes.terraform').terraformfmt },
         fish = { require('formatter.filetypes.fish').fishindent },
         yaml = { require('formatter.filetypes.yaml').pyyaml },
@@ -209,6 +223,17 @@ require('formatter').setup {
         },
     },
 }
+
+bind_leader('b', function()
+    vim.cmd('FormatLock')
+end)
+
+vim.api.nvim_create_autocmd({'BufWritePost'}, {
+    pattern = { '*' },
+    callback = function()
+        vim.cmd("FormatWrite")
+    end,
+})
 EOF
 
 source ~/.vimrc
