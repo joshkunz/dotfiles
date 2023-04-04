@@ -16,6 +16,7 @@ want_apt_pkgs=(
     git
     python3
     python3-pip
+    tmux
 )
 
 sudo apt-get install -y "${want_apt_pkgs[@]}"
