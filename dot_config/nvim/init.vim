@@ -4,7 +4,8 @@ let &packpath=&runtimepath
 lua << EOF
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    use 'altercation/vim-colors-solarized'
+    -- use 'altercation/vim-colors-solarized'
+    use 'lifepillar/vim-solarized8'
     use 'SirVer/ultisnips'
     use { 'nvim-lualine/lualine.nvim',
           requires = {
@@ -34,23 +35,61 @@ require('packer').startup(function(use)
     }
     use 'kassio/neoterm'
     use 'mhartington/formatter.nvim'
+    use 'j-hui/fidget.nvim'
 end)
 
-function bind_leader(key, f)
-    vim.keymap.set('n', '<Leader>'..key, f)
+
+if vim.fn.has 'termguicolors' then
+    vim.o.termguicolors = true
+end
+
+function leaders(m)
+    for key, fun in pairs(m) do
+        vim.keymap.set('n', '<Leader>'..key, fun)
+    end
 end
 
 telescope_builtin = require('telescope.builtin')
 
-bind_leader('f', telescope_builtin.git_files)
-bind_leader('b', telescope_builtin.buffers)
-bind_leader('z', telescope_builtin.treesitter)
-bind_leader('g', telescope_builtin.live_grep)
-bind_leader('s', telescope_builtin.grep_string)
-bind_leader('r', telescope_builtin.lsp_references)
-bind_leader('i', telescope_builtin.lsp_incoming_calls)
-bind_leader('o', telescope_builtin.lsp_outgoing_calls)
-bind_leader('d', telescope_builtin.lsp_definitions)
+leaders {
+    f = telescope_builtin.git_files,
+    b = telescope_builtin.buffers,
+    z = telescope_builtin.treesitter,
+    g = telescope_builtin.live_grep,
+    s = telescope_builtin.grep_string,
+}
+
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+        local opts = { buffer = ev.buf }
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gd', telescope_builtin.lsp_definitions, opts)
+        vim.keymap.set('n', 'gr', telescope_builtin.lsp_references, opts)
+        vim.keymap.set('n', 'gi', telescope_builtin.lsp_incoming_calls, opts)
+        vim.keymap.set('n', 'go', telescope_builtin.lsp_outgoing_calls, opts)
+    end,
+})
+
+vim.filetype.add {
+    extension = {
+        hcl = 'hcl',
+        tf = 'hcl',
+        tfvars = 'hcl',
+        tfstate = 'json',
+    },
+    filename = {
+        ['.terraformrc'] = 'hcl',
+        ['terraform.rc'] = 'hcl',
+    },
+}
 
 function begin_append_when_in_term()
     if vim.api.nvim_buf_get_option(0, 'buftype') == 'terminal' then
@@ -146,6 +185,7 @@ require('nvim-treesitter.configs').setup({
         'go',
         'gomod',
         'haskell',
+        'hcl',
         'html',
         'http',
         'java',
@@ -171,7 +211,12 @@ require('nvim-treesitter.configs').setup({
     },
     autotag = {
         enable = true,
-    }
+    },
+    highlight = {
+        enable = true,
+        disable = { 'cpp' },
+        additional_vim_regex_highlighting = false,
+    },
 })
 
 require('lualine').setup({
@@ -224,9 +269,11 @@ require('formatter').setup {
     },
 }
 
-bind_leader('b', function()
-    vim.cmd('FormatLock')
-end)
+leaders {
+    b = function()
+        vim.cmd('FormatLock')
+    end,
+}
 
 vim.api.nvim_create_autocmd({'BufWritePost'}, {
     pattern = { '*' },
@@ -234,6 +281,8 @@ vim.api.nvim_create_autocmd({'BufWritePost'}, {
         vim.cmd("FormatWrite")
     end,
 })
+
+require('fidget').setup({})
 EOF
 
 source ~/.vimrc

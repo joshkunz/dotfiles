@@ -18,7 +18,11 @@ if empty(finddir("vim_undodir", "/tmp"))
 endif
 set undodir=s:undodir
 
-colorscheme solarized
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set background=dark
+colorscheme solarized8
+"colorscheme solarized
 "colorscheme darkblue
 
 function! TrimWhiteSpace()
@@ -50,7 +54,7 @@ set cursorline
 set showmatch
 
 "call MakeBright()
-call MakeDark()
+"call MakeDark()
 
 "Color Column
 set colorcolumn=80
