@@ -1,0 +1,17 @@
+snippet ife "if err != nil { ... }"
+if err != nil {
+	$1
+}
+endsnippet
+
+snippet ifes "if err := ...; err != nil { ... }"
+if err := $1; err != nil {
+	$2
+}
+endsnippet
+
+snippet ifer "if err != nil { return err }"
+if err != nil {
+	return $0err
+}
+endsnippet
