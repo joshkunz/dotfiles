@@ -31,6 +31,7 @@ require('packer').startup(function(use)
             { 'quangnguyen30192/cmp-nvim-ultisnips' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
         },
     }
     use 'kassio/neoterm'
@@ -131,14 +132,27 @@ vim.g.neoterm_repl_r = ''
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
-        expand = function(args) vim.fn["UltiSnips#Anon"](args.body) end
+        expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+        end,
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'ultisnips' },
         { name = 'buffer' },
-    })
-
+    }),
+    mapping = cmp.mapping.preset.insert({
+        ['<C-space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end,
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
 })
 
 local lsp_capabilities = {}
