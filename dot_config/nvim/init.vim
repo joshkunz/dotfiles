@@ -57,7 +57,16 @@ leaders {
     z = telescope_builtin.treesitter,
     g = telescope_builtin.live_grep,
     s = telescope_builtin.grep_string,
+    j = telescope_builtin.jumplist,
 }
+
+vim.api.nvim_create_user_command('LGLink', function(opts)
+    local file = vim.fn.getreg('%')
+    local line_no = vim.fn.line('.')
+    local sha = vim.fn.system('git rev-parse HEAD')
+    local root = vim.fn.system('git rev-parse --show-toplevel')
+
+end, {})
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -270,7 +279,7 @@ require('formatter').setup {
 }
 
 leaders {
-    b = function()
+    q = function()
         vim.cmd('FormatLock')
     end,
 }
