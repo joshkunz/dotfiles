@@ -3,27 +3,14 @@ set nocompatible
 filetype plugin on
 syntax enable
 
-" Helper functions
-function! MakeBright()
-    set background=light
-endfunction
-
-function! MakeDark()
-    set background=dark
-endfunction
-
 let s:undodir = "/tmp/vim_undodir"
 if empty(finddir("vim_undodir", "/tmp"))
     call mkdir(s:undodir)
 endif
 set undodir=s:undodir
 
-"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set background=dark
 colorscheme solarized8
-"colorscheme solarized
-"colorscheme darkblue
 
 function! TrimWhiteSpace()
     %s/\s\+$//e
@@ -32,7 +19,7 @@ endfunction
 " Make backspace work like normal
 set backspace=indent,eol,start
 
-"read file changes
+" read file changes
 set autoread
 
 " Let me abandon buffers with changes
@@ -45,26 +32,18 @@ set ruler
 set modeline
 set modelines=1
 
-"set backup
-"set backupdir=~/.cache/vim
-
 " Maybe
 set cursorline
 " set cursorbind
 set showmatch
 
-"call MakeBright()
-"call MakeDark()
 
 "Color Column
 set colorcolumn=80
 hi ColorColumn ctermbg=darkgrey
 
 set number
-" Linux font
-set guifont=Dejavu\ Sans\ Mono\ 15
-" Mac font
-"set guifont=Menlo\ Regular:h15
+set relativenumber
 
 " Tabs
 set tabstop=4
@@ -73,9 +52,6 @@ set shiftwidth=4
 set autoindent
 "set cindent
 set expandtab
-
-" nmap vj <C-w>j
-" nmap vk <C-w>k
 
 function! Scratch()
     split
@@ -89,7 +65,6 @@ endfunction
 
 " :Scratch - Create a new scratch buffer that is not backed by a file.
 command! Scratch call Scratch()
-
 
 " For pandoc syn plugin
 let g:pandoc_no_folding = 1
