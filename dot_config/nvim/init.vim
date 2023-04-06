@@ -17,7 +17,14 @@ require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         requires = {
             'nvim-lua/plenary.nvim',
-        }
+            { 'nvim-telescope/telescope-fzf-native.nvim',
+                run = table.concat({
+                    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release',
+                    'cmake --build build --config Release',
+                    'cmake --install build --prefix build',
+                }, ' && '),
+            },
+        },
     }
 
     use 'neovim/nvim-lspconfig'
@@ -43,6 +50,9 @@ end)
 if vim.fn.has 'termguicolors' then
     vim.o.termguicolors = true
 end
+
+require('telescope').setup {}
+require('telescope').load_extension('fzf')
 
 function leaders(m)
     for key, fun in pairs(m) do
