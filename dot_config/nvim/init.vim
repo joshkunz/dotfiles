@@ -37,8 +37,8 @@ require('packer').startup(function(use)
     use 'kassio/neoterm'
     use 'mhartington/formatter.nvim'
     use 'j-hui/fidget.nvim'
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
 end)
-
 
 if vim.fn.has 'termguicolors' then
     vim.o.termguicolors = true
@@ -239,6 +239,15 @@ require('nvim-treesitter.configs').setup({
         enable = true,
         disable = { 'cpp' },
         additional_vim_regex_highlighting = false,
+    },
+    textobjects = {
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_previous_start = {
+                ['gt'] = '@function.outer',
+            },
+        },
     },
 })
 
