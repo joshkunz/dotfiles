@@ -45,6 +45,7 @@ require('packer').startup(function(use)
     use 'mhartington/formatter.nvim'
     use 'j-hui/fidget.nvim'
     use 'nvim-treesitter/nvim-treesitter-textobjects'
+    use 'kdheepak/tabline.nvim'
 end)
 
 if vim.fn.has 'termguicolors' then
@@ -281,6 +282,7 @@ require('lualine').setup({
     },
 })
 
+require('tabline').setup {}
 
 local fmtutil = require('formatter.util')
 
