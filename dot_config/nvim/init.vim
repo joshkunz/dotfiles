@@ -4,14 +4,11 @@ let &packpath=&runtimepath
 lua << EOF
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    -- use 'altercation/vim-colors-solarized'
     use 'lifepillar/vim-solarized8'
+    use 'neovim/nvim-lspconfig'
     use 'SirVer/ultisnips'
-    use { 'nvim-lualine/lualine.nvim',
-          requires = {
-              { 'nvim-tree/nvim-web-devicons', opt = true },
-        }
-    }
+    use 'nvim-tree/nvim-web-devicons'
+    use 'nvim-lualine/lualine.nvim'
 
     use {
         'nvim-telescope/telescope.nvim',
@@ -27,10 +24,8 @@ require('packer').startup(function(use)
         },
     }
 
-    use 'neovim/nvim-lspconfig'
 
     use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    --use 'windwp/nvim-ts-autotag'
 
     use {
         'hrsh7th/nvim-cmp',
@@ -46,13 +41,25 @@ require('packer').startup(function(use)
     use 'j-hui/fidget.nvim'
     use 'nvim-treesitter/nvim-treesitter-textobjects'
     use 'kdheepak/tabline.nvim'
+    use 'folke/trouble.nvim'
 end)
 
 if vim.fn.has 'termguicolors' then
     vim.o.termguicolors = true
 end
 
-require('telescope').setup {}
+require('trouble').setup {}
+local trouble_telescope = require('trouble.providers.telescope')
+
+require('telescope').setup {
+    defaults = {
+        mappings = {
+            i = { ['<C-t>'] = trouble_telescope.open_with_trouble },
+            n = { ['<C-t>'] = trouble_telescope.open_with_trouble },
+        }
+    }
+}
+
 require('telescope').load_extension('fzf')
 
 function leaders(m)
@@ -83,13 +90,11 @@ end, {})
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<space>q', '<cmd>TroubleToggle document_diagnostics<CR>')
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
-        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
         local opts = { buffer = ev.buf }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', telescope_builtin.lsp_definitions, opts)
