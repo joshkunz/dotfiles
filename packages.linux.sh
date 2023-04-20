@@ -37,7 +37,6 @@ want_brew_pkgs=(
     neovim
     ripgrep
     tree-sitter
-    typescript-language-server
 )
 
 brew update
