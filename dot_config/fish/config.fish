@@ -61,6 +61,7 @@ maybe_add_path -p ~/.local/bin
 maybe_add_path $HOME/opt/zig-linux-x86_64-0.4.0 $PATH
 maybe_add_path ~/.cabal/bin
 maybe_add_path -p ~/go/bin
+maybe_add_path /usr/local/go/bin
 
 if test -d ~/.cargo/env
     set -l rust_path (env - bash -c 'source ~/.cargo/env; env' | rg '^PATH=' | tail -c+6 | tr ":" \n)
