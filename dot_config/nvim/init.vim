@@ -98,9 +98,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
         local opts = { buffer = ev.buf }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', telescope_builtin.lsp_definitions, opts)
+        vim.keymap.set('n', 'gI', telescope_builtin.lsp_implementations, opts)
         vim.keymap.set('n', 'gr', telescope_builtin.lsp_references, opts)
         vim.keymap.set('n', 'gi', telescope_builtin.lsp_incoming_calls, opts)
         vim.keymap.set('n', 'go', telescope_builtin.lsp_outgoing_calls, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     end,
 })
 
