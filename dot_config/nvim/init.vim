@@ -157,11 +157,17 @@ cmp.setup({
             vim.fn["UltiSnips#Anon"](args.body)
         end,
     },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'ultisnips' },
-        { name = 'buffer' },
-    }),
+    sources = cmp.config.sources(
+        {
+            { name = 'ultisnips' },
+        },
+        {
+            { name = 'nvim_lsp' },
+        },
+        {
+            { name = 'buffer' },
+        }
+    ),
     mapping = cmp.mapping.preset.insert({
         ['<C-space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
