@@ -1,3 +1,5 @@
+" vim: set filetype=vim:
+
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath=&runtimepath
 
@@ -215,6 +217,11 @@ lspconfig.tsserver.setup({
 
 lspconfig.r_language_server.setup({})
 
+local work_cfg = require('workcfg')
+if work_cfg ~= nil then
+    work_cfg.setup_extra_lsp_configs(lsp_capabilities)
+end
+
 --require('lspsaga').setup({
 --    lightbulb = { enable = false },
 --})
@@ -323,6 +330,14 @@ require('formatter').setup {
         terraform = { require('formatter.filetypes.terraform').terraformfmt },
         fish = { require('formatter.filetypes.fish').fishindent },
         yaml = { require('formatter.filetypes.yaml').pyyaml },
+        ruby = (function()
+            if work_cfg ~= nil then
+                return { work_cfg.ruby_formatter }
+            else
+                return nil
+            end
+        end
+        )(),
         ["*"] = {
             require('formatter.filetypes.any').remove_trailing_whitespace,
         },

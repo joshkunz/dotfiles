@@ -1,0 +1,13 @@
+# vim: set syn=fish:
+
+# These are platform-specific wrappers to make it easier to write cross
+# platform scripts.
+
+{{ if eq .chezmoi.os "darwin" }}
+# Alias to gdate if it exists.
+if which gdate >/dev/null
+    alias date gdate
+else
+    echo "WARNING: Using macOS bundled date" >&2
+end
+{{ end }}
