@@ -6,6 +6,7 @@
 *.pyc
 *.o
 .vscode/**
+*.orig
 
 # Bazel Paths
 bazel-*
