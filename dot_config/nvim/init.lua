@@ -1,14 +1,17 @@
-" vim: set filetype=vim:
+-- Pre-pend ~/.vim to search path
+table.insert(vim.opt.runtimepath, 1, '~/.vim')
+-- Append ~/.vim/after to serarch path
+table.insert(vim.opt.runtimepath, '~/.vim/after')
 
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath=&runtimepath
+vim.cmd([[
 
 function SetupDetectorDebug()
     let @o='gff:€ýallv$h"*y:!open (€kb$(pbas€kb€kbpaste)jj^f:€ýallv$h"*y:!open $(pbpaste)€kl€ý,€ý.'
     let @d='^lvf"€ýahy:!discard-event -e ":!rm "dd'
 endfunction
 
-lua << EOF
+]])
+
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'lifepillar/vim-solarized8'
@@ -359,6 +362,6 @@ vim.api.nvim_create_autocmd({'BufWritePost'}, {
 })
 
 require('fidget').setup({})
-EOF
 
-source ~/.vimrc
+-- Load backwards-compatible configuration
+vim.cmd.source('~/.vimrc')
