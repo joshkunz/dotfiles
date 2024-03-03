@@ -217,7 +217,7 @@ lspconfig.tsserver.setup({
 lspconfig.r_language_server.setup({})
 
 local work_cfg = require('workcfg')
-if work_cfg ~= nil then
+if work_cfg then
     work_cfg.setup_extra_lsp_configs(lsp_capabilities)
 end
 
@@ -332,7 +332,7 @@ require('formatter').setup {
         fish = { require('formatter.filetypes.fish').fishindent },
         yaml = { require('formatter.filetypes.yaml').pyyaml },
         ruby = (function()
-            if work_cfg ~= nil then
+            if work_cfg then
                 return { work_cfg.ruby_formatter }
             else
                 return nil
