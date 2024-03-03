@@ -203,14 +203,8 @@ lspconfig.clangd.setup({
     capabilities = lsp_capabilities,
 })
 
-gopls_command = { 'gopls' }
-if os.getenv("YGG_ROOT") ~= nil then
-    driver_path = os.getenv("YGG_ROOT") .. '/dev/scripts/gopackagesdriver'
-    gopls_command = { 'env', 'GOPACKAGESDRIVER=' .. driver_path, 'gopls' }
-end
-
 lspconfig.gopls.setup({
-    cmd = gopls_command,
+    cmd = { 'gopls' },
     capabilities = lsp_capabilities,
 })
 
@@ -226,6 +220,8 @@ local work_cfg = require('workcfg')
 if work_cfg ~= nil then
     work_cfg.setup_extra_lsp_configs(lsp_capabilities)
 end
+
+lspconfig.hls.setup({})
 
 --require('lspsaga').setup({
 --    lightbulb = { enable = false },

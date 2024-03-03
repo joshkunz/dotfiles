@@ -94,6 +94,12 @@ set -x LESS "-FRX"
 set -x EDITOR nvim
 set -x PAGER less
 set -x LANG "en_US.UTF-8"
+set -x LC_ALL $LANG
+
+set -q GHCUP_INSTALL_BASE_PREFIX[1]
+or set GHCUP_INSTALL_BASE_PREFIX $HOME
+fish_add_path -p $HOME/.ghcup/bin
+fish_add_path -p $HOME/.cabal/bin
 
 #### SSH Agent ###
 
