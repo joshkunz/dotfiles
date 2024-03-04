@@ -101,7 +101,7 @@ or set GHCUP_INSTALL_BASE_PREFIX $HOME
 fish_add_path -p $HOME/.ghcup/bin
 fish_add_path -p $HOME/.cabal/bin
 
-#### SSH Agent ###
+#### SSH Agent ####
 
 # For ssh-agent
 if not set -q SSH_AUTH_SOCK
@@ -113,3 +113,7 @@ if not set -q SSH_AGENT_PID
     # Add all host keys
     ssh-add
 end
+
+#### Zoxide ####
+
+zoxide init fish --cmd cd | source
