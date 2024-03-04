@@ -34,6 +34,7 @@
     # "Show Pull Diff"
     pdiff = diff -b "@{1}"
     p = push --force-with-lease
+    pnv = push --force-with-lease --no-verify
     pu = push --set-upstream origin HEAD
     b = branch
     co = checkout
@@ -41,6 +42,7 @@
     reword = commit --amend
     cob = fish git-cob
     mt = mergetool
+    mc = git merge --continue
 
 {{- if .work }}
     dance = fish git-dance
@@ -49,10 +51,10 @@
     ugh = fish git-ugh
 {{- end }}
 
-{{- if hasKey . "gitHost" }}
+{{- if hasKey . "git" }}
 # For custom git hosts
 [hub]
-	host = {{ .gitHost }}
+    host = {{ .git.host }}
 {{- end }}
 
 {{- if not .work }}
@@ -68,4 +70,12 @@
 
 [gpg]
 	format = ssh
+{{- end }}
+
+{{- if dig "git" "maintainanceRepos" nil . | empty | not }}
+[maintainance]
+    strategy = incremental
+    {{- range .git.maintainanceRepos }}
+    repo = {{ . }}
+    {{- end }}
 {{- end }}

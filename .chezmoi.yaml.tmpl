@@ -11,10 +11,13 @@ data:
 {{- end }}
 
 {{- if $is_work }}
+{{- $work_config := include (joinPath .chezmoi.homeDir ".work") | fromYaml }}
     work: true
     codeRoot: "$HOME/stripe"
     email: {{ onepasswordRead "op://Private/Josh Kunz/email" }}
-    gitHost: {{ onepasswordRead "op://Private/Git/host" }}
+    git:
+        host: {{ onepasswordRead "op://Private/Git/host" }}
+        maintainanceRepos: {{ $work_config.maintainanceRepos | toYaml | nindent 12 }}
 {{- else }}
     work: false
     codeRoot: "$HOME/code"
