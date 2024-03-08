@@ -1,7 +1,7 @@
 -- Pre-pend ~/.vim to search path
-table.insert(vim.opt.runtimepath, 1, '~/.vim')
+vim.opt.runtimepath:prepend("~/.vim")
 -- Append ~/.vim/after to serarch path
-table.insert(vim.opt.runtimepath, '~/.vim/after')
+vim.opt.runtimepath:append('~/.vim/after')
 
 vim.cmd([[
 
