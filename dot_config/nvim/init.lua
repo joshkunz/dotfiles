@@ -332,6 +332,7 @@ require('formatter').setup {
             end,
         },
         terraform = { require('formatter.filetypes.terraform').terraformfmt },
+        hcl = { require('formatter.filetypes.terraform').terraformfmt },
         fish = { require('formatter.filetypes.fish').fishindent },
         yaml = { require('formatter.filetypes.yaml').pyyaml },
         ruby = (function()
@@ -342,6 +343,16 @@ require('formatter').setup {
             end
         end
         )(),
+        bzl = {
+            function()
+                return {
+                    exe = "buildifier",
+                    cwd = fmtutil.get_current_buffer_file_dir(),
+                    args = { '-path', fmtutil.get_current_buffer_file_path(), '-' },
+                    stdin = true
+                }
+            end,
+        },
         ["*"] = {
             require('formatter.filetypes.any').remove_trailing_whitespace,
         },
@@ -354,8 +365,9 @@ leaders {
     end,
 }
 
+vim.api.nvim_create_augroup('__formatter__', { clear = true })
 vim.api.nvim_create_autocmd({'BufWritePost'}, {
-    pattern = { '*' },
+    group = '__formatter__',
     callback = function()
         vim.cmd("FormatWrite")
     end,
