@@ -1,5 +1,8 @@
 set nocompatible
 
+" Make leader explicit
+let mapleader='\'
+
 filetype plugin on
 syntax enable
 
