@@ -3,15 +3,6 @@ vim.opt.runtimepath:prepend("~/.vim")
 -- Append ~/.vim/after to serarch path
 vim.opt.runtimepath:append('~/.vim/after')
 
-vim.cmd([[
-
-function SetupDetectorDebug()
-    let @o='gff:€ýallv$h"*y:!open (€kb$(pbas€kb€kbpaste)jj^f:€ýallv$h"*y:!open $(pbpaste)€kl€ý,€ý.'
-    let @d='^lvf"€ýahy:!discard-event -e ":!rm "dd'
-endfunction
-
-]])
-
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'lifepillar/vim-solarized8'
