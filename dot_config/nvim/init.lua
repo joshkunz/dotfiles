@@ -72,12 +72,12 @@ end
 telescope_builtin = require('telescope.builtin')
 
 leaders {
-    f = telescope_builtin.git_files,
-    b = telescope_builtin.buffers,
-    z = telescope_builtin.treesitter,
-    g = telescope_builtin.live_grep,
-    s = telescope_builtin.grep_string,
-    j = telescope_builtin.jumplist,
+    jf = telescope_builtin.git_files,
+    jb = telescope_builtin.buffers,
+    jz = telescope_builtin.treesitter,
+    jg = telescope_builtin.live_grep,
+    js = telescope_builtin.grep_string,
+    jj = telescope_builtin.jumplist,
 }
 
 vim.api.nvim_create_user_command('LGLink', function(opts)
@@ -85,7 +85,6 @@ vim.api.nvim_create_user_command('LGLink', function(opts)
     local line_no = vim.fn.line('.')
     local sha = vim.fn.system('git rev-parse HEAD')
     local root = vim.fn.system('git rev-parse --show-toplevel')
-
 end, {})
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
