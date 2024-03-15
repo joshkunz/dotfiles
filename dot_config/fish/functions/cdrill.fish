@@ -1,3 +1,3 @@
 function cdrill
-    pushd (fd --type directory | fzf)
+    cd (fd --type directory | fzf)
 end

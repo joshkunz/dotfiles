@@ -109,6 +109,7 @@ if not set -q SSH_AUTH_SOCK
 end
 
 if not set -q SSH_AGENT_PID
+    echo "starting agent" 2>&1
     source (ssh-agent -c | rg -v '^echo' | psub)
     # Add all host keys
     ssh-add
