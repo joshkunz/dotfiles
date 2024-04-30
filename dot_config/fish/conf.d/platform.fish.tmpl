@@ -12,12 +12,8 @@ else
 end
 {{- end }}
 
-{{- if eq .chezmoi.os "linux" }}
-{{- if output "uname" "--kernel-release" | contains "-WSL" }}
-# We're running under WSL
-
+{{- if .is_wsl }}
 # WSL-specific aliases that allow 1Password SSH agent to work nicely.
 alias ssh wsl-ssh
 alias ssh-add wsl-ssh-add
-{{- end }}
 {{- end }}

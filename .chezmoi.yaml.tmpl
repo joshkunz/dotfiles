@@ -10,6 +10,12 @@ data:
     is_server: false
 {{- end }}
 
+{{- if eq .chezmoi.os "linux" }}
+{{- if .chezmoi.kernel.osrelease | lower | contains "microsoft" }}
+    is_wsl: true
+{{- end }}
+{{- end }}
+
 {{- if $is_work }}
 {{- $work_config := include (joinPath .chezmoi.homeDir ".work") | fromYaml }}
     work: true
