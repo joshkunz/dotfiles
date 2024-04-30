@@ -3,11 +3,21 @@
 # These are platform-specific wrappers to make it easier to write cross
 # platform scripts.
 
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" }}
 # Alias to gdate if it exists.
 if which gdate >/dev/null
     alias date gdate
 else
     echo "WARNING: Using macOS bundled date" >&2
 end
-{{ end }}
+{{- end }}
+
+{{- if eq .chezmoi.os "linux" }}
+{{- if output "uname" "--kernel-release" | contains "-WSL" }}
+# We're running under WSL
+
+# WSL-specific aliases that allow 1Password SSH agent to work nicely.
+alias ssh wsl-ssh
+alias ssh-add wsl-ssh-add
+{{- end }}
+{{- end }}
