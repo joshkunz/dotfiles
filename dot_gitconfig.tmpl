@@ -1,7 +1,7 @@
 [core]
     excludesfile = ~/.gitignore
 {{- if .is_wsl }}
-    sshCommand = "fish -c \"wsl-ssh\""
+    sshCommand = "fish -c 'wsl-ssh $argv'"
 {{- end }}
 
 [user]
