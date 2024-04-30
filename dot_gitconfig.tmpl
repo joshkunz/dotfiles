@@ -1,5 +1,8 @@
 [core]
     excludesfile = ~/.gitignore
+{{- if .is_wsl }}
+    sshCommand = "fish -c \"wsl-ssh\""
+{{- end }}
 
 [user]
     name = Josh Kunz
