@@ -106,14 +106,14 @@ fish_add_path -p $HOME/.cabal/bin
 # For ssh-agent
 if not set -q SSH_AUTH_SOCK
     set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+    if not set -q SSH_AGENT_PID
+        echo "starting agent" 2>&1
+        source (ssh-agent -c | psub)
+        # Add all host keys
+        ssh-add
+    end
 end
 
-if not set -q SSH_AGENT_PID
-    echo "starting agent" 2>&1
-    source (ssh-agent -c | rg -v '^echo' | psub)
-    # Add all host keys
-    ssh-add
-end
 
 #### Zoxide ####
 
