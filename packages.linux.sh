@@ -16,6 +16,7 @@ want_apt_pkgs=(
     git
     python3
     python3-pip
+    python3-pynvim
     tmux
 )
 
@@ -34,16 +35,13 @@ want_brew_pkgs=(
     fd
     fish
     fzf
+    # Needed to get fish to work properly
+    gcc
     neovim
     ripgrep
     tree-sitter
+    zoxide
 )
 
 brew update
 brew install "${want_brew_pkgs[@]}"
-
-want_python_pkgs=(
-    pynvim
-)
-
-pip3 install "${want_python_pkgs[@]}"
