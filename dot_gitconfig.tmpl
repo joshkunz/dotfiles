@@ -7,8 +7,8 @@
 [user]
     name = Josh Kunz
     email = {{ .email }}
-{{- if .is_server }}
-    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMb+CIDdKHtkvn+4jtCum0LmM1u3Jfswp01sifwrnbh7mvpCKySbcjLGMVC2IfKsoHtdy60y1OQFgYPTTOukA0NTGd32gp0NjRR6XRzgAAmoNXtmkojqW7TWd6XGDwi7Nc9Q6O3Cfsrb85OoXJNqs5tcSLAKkqM9P3YKE73rWoN9yDJk4OUq1whvN3Yc15b1+uNabpZr8yFdOAGD+SMluXk0+0FOEVA6U3s3vsvxDIENz8M0SHS0WsOUPxB4Q1hkYw1nKUP3adN7i3/PeNZRIwx4Gie7wpJ9t+FZNoP4O1hdr9hGVBGu6sbgM7rq1yBmkW3Lj/yRbCXrlzCtVyk5OP
+{{- if not .work }}
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAk9+lkO38uMvqbgpShs+6/aAuI10owf1mYCOlnKo1d7
 {{- end }}
 
 [color]
@@ -63,7 +63,7 @@
 [init]
 	defaultBranch = main
 
-{{- if .is_server }}
+{{- if not .work }}
 # For GPG Signing of commits
 [credential]
 	helper = cache
