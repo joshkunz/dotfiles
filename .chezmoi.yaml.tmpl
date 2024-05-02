@@ -3,22 +3,17 @@
     "apollo"
 -}}
 
-# Initialize to false, will overwrite if we are on wsl
-{{- $is_wsl := false -}}
+data:
 {{- if eq .chezmoi.os "linux" }}
 {{- if .chezmoi.kernel.osrelease | lower | contains "microsoft" }}
-{{- $is_wsl := true -}}
+    is_wsl: true
 {{- end }}
 {{- end }}
-
-data:
 {{- if has .chezmoi.hostname $servers }}
     is_server: true
 {{- else }}
     is_server: false
 {{- end }}
-
-    is_wsl: {{if $is_wsl}}true{{else}}false{{end}}
 
 {{- if $is_work }}
 {{- $work_config := include (joinPath .chezmoi.homeDir ".work") | fromYaml }}

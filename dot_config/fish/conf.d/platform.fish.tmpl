@@ -12,8 +12,9 @@ else
 end
 {{- end }}
 
-{{- if .is_wsl }}
+{{- if hasKey . "is_wsl" | and .is_wsl }}
 # WSL-specific aliases that allow 1Password SSH agent to work nicely.
 alias ssh wsl-ssh
 alias ssh-add wsl-ssh-add
+alias ssh-keygen wsl-ssh-keygen
 {{- end }}
