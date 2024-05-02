@@ -13,6 +13,7 @@ fi
 want_apt_pkgs=(
     build-essential
     clangd
+    cmake
     git
     python3
     python3-pip
@@ -38,6 +39,7 @@ want_brew_pkgs=(
     # Needed to get fish to work properly
     gcc
     neovim
+    node
     ripgrep
     tree-sitter
     zoxide
