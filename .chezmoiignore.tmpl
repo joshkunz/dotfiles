@@ -1,6 +1,14 @@
 readme.md
 packages.linux.sh
 
+# For Windows, exclude everything but AppData. For non-windows exclude AppData
+{{- if eq .chezmoi.os "windows" }}
+**
+!AppData
+{{- else }}
+AppData/**
+{{- end }}
+
 # Linux-only configuration files
 {{- if ne .chezmoi.os "linux" }}
 
