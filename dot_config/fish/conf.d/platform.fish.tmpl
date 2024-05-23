@@ -13,8 +13,19 @@ end
 {{- end }}
 
 {{- if hasKey . "is_wsl" | and .is_wsl }}
-# WSL-specific aliases that allow 1Password SSH agent to work nicely.
-alias ssh wsl-ssh
-alias ssh-add wsl-ssh-add
-alias ssh-keygen wsl-ssh-keygen
+if not set -q SSH_AUTH_SOCK
+    # Run npiperealy to accesss windows host SSH agent. Using our wsl-ssh also
+    # works, but ssh.exe has some terminal emulation bugs that make it unusable.
+    set -gx SSH_AUTH_SOCK (mktemp -u /tmp/ssh-auth-sock-XXXXX)
+    # Prevent our auto ssh-agent startup from running.
+    socat UNIX-LISTEN:$SSH_AUTH_SOCK,fork EXEC:"/mnt/c/Users/josh/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork &
+    set -gx SSH_AGENT_PID (jobs --last --pid)
+    # We're not really trying to disown here, but doing this means that our
+    # on_exit handler below will terminate without us getting prompted that there
+    # are still running background jobs.
+    disown $SSH_AGENT_PID
+    function on_exit_kill_ssh_agent_relay --on-event fish_exit
+        kill $SSH_AGENT_PID
+    end
+end
 {{- end }}
