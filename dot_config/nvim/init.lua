@@ -7,6 +7,9 @@ vim.opt.runtimepath:append('~/.vim/after')
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- enable 24-bit colour
+vim.opt.termguicolors = true
+
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
