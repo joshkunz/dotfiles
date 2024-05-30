@@ -5,11 +5,11 @@ vim.opt.runtimepath:append('~/.vim/after')
 
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
-    use 'lifepillar/vim-solarized8'
     use 'neovim/nvim-lspconfig'
     use 'SirVer/ultisnips'
     use 'nvim-tree/nvim-web-devicons'
     use 'nvim-lualine/lualine.nvim'
+    use 'maxmx03/solarized.nvim'
 
     use {
         'nvim-telescope/telescope.nvim',
@@ -49,6 +49,30 @@ end)
 if vim.fn.has 'termguicolors' then
     vim.o.termguicolors = true
 end
+
+vim.opt.background = 'dark'
+require('solarized').setup({
+    highlights = function(colors)
+        return {
+            -- Unset some lsp specs that are better handled by treesitter or
+            -- overrides.
+            ['@lsp.type.variable'] = { fg = 'NONE' },
+            ['@lsp.type.keyword.go'] = { fg = 'NONE' },
+
+            -- Variables should be "normal" content quality.
+            ['@variable'] = { fg = colors.base0 },
+            -- Parameters are purple.
+            ['@variable.parameter'] = { link = 'Underlined' },
+            ['@lsp.type.parameter'] = { link = '@variable.parameter' },
+            ['@lsp.typemod.parameter.definition.go'] = { link = '@variable.parameter' },
+            -- Definitions of new variables are blue.
+            ['@lsp.mod.definition'] = { link = 'Identifier' },
+            -- Namespaces, IDK... Still working on it.
+            ['@namespace'] = { fg = colors.orange },
+        }
+    end,
+})
+vim.cmd.colorscheme('solarized')
 
 require('trouble').setup {}
 local trouble_telescope = require('trouble.providers.telescope')
