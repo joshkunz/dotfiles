@@ -458,3 +458,9 @@ require('nvim-tree').setup({
 
 -- Load backwards-compatible configuration
 vim.cmd.source('~/.vimrc')
+
+leaders {
+    c = function()
+        vim.cmd('bp | sp | bn | bd')
+    end,
+}
