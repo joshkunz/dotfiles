@@ -1,3 +1,3 @@
 function edrill
-    vim (find . -type f | fzf)
+    vim (git ls-files | fzf)
 end
