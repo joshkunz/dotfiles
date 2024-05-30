@@ -165,6 +165,7 @@ vim.filetype.add {
         tf = 'hcl',
         tfvars = 'hcl',
         tfstate = 'json',
+        sky = 'sky',
     },
     filename = {
         ['.terraformrc'] = 'hcl',
