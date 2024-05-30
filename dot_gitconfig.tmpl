@@ -1,6 +1,6 @@
 [core]
     excludesfile = ~/.gitignore
-{{- if hasKey . "is_wsl" | and .is_wsl }}
+{{- if get . "is_wsl" }}
     sshCommand = "fish -c 'wsl-ssh $argv'"
 {{- end }}
 
@@ -73,7 +73,7 @@
 
 [gpg]
 	format = ssh
-{{- if hasKey . "is_wsl" | and .is_wsl }}
+{{- if get . "is_wsl" }}
 [gpg "ssh"]
     program = "ssh-keygen.exe"
 {{- end }}

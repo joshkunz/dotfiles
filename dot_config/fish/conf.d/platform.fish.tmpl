@@ -12,7 +12,7 @@ else
 end
 {{- end }}
 
-{{- if hasKey . "is_wsl" | and .is_wsl }}
+{{- if get . "is_wsl" }}
 if not set -q SSH_AUTH_SOCK
     # Run npiperealy to accesss windows host SSH agent. Using our wsl-ssh also
     # works, but ssh.exe has some terminal emulation bugs that make it unusable.
