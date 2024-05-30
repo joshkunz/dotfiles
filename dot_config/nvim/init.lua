@@ -52,6 +52,7 @@ require('packer').startup(function(use)
     use 'kdheepak/tabline.nvim'
     use 'folke/trouble.nvim'
     use 'nvim-tree/nvim-tree.lua'
+    use 'ibhagwan/fzf-lua'
 end)
 
 if vim.fn.has 'termguicolors' then
@@ -82,10 +83,26 @@ require('solarized').setup({
 })
 vim.cmd.colorscheme('solarized')
 
+require('fzf-lua').setup({
+    files = {
+        -- Disable git icons they rely on `git status` which is relatively
+        -- slow.
+        git_icons = false,
+    },
+})
+
 require('trouble').setup {}
 local trouble_telescope = require('trouble.providers.telescope')
 
 require('telescope').setup {
+    extensions = {
+        fzf = {
+            fuzzy = true,
+            override_generic_sorter = true,
+            override_file_sorter = true,
+            case_mode = "smart_case",
+        },
+    },
     defaults = {
         mappings = {
             i = { ['<C-t>'] = trouble_telescope.open_with_trouble },
@@ -105,7 +122,7 @@ end
 telescope_builtin = require('telescope.builtin')
 
 leaders {
-    jf = telescope_builtin.git_files,
+    jf = require('fzf-lua').git_files,
     jb = telescope_builtin.buffers,
     jz = telescope_builtin.treesitter,
     jg = telescope_builtin.live_grep,
