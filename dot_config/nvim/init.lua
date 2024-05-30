@@ -3,6 +3,10 @@ vim.opt.runtimepath:prepend("~/.vim")
 -- Append ~/.vim/after to serarch path
 vim.opt.runtimepath:append('~/.vim/after')
 
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'neovim/nvim-lspconfig'
@@ -44,6 +48,7 @@ require('packer').startup(function(use)
     use 'nvim-treesitter/nvim-treesitter-textobjects'
     use 'kdheepak/tabline.nvim'
     use 'folke/trouble.nvim'
+    use 'nvim-tree/nvim-tree.lua'
 end)
 
 if vim.fn.has 'termguicolors' then
@@ -400,6 +405,35 @@ vim.api.nvim_create_autocmd({'BufWritePost'}, {
 })
 
 require('fidget').setup({})
+
+function nvim_tree_on_attach(bufnr)
+    local api = require('nvim-tree.api')
+
+    local function opts(desc)
+      return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+    end
+
+    local function single_click_open()
+        local node = api.tree.get_node_under_cursor()
+        api.node.open.edit()
+    end
+
+    api.config.mappings.default_on_attach(bufnr)
+
+    vim.keymap.del('n', '<2-LeftMouse>', opts('Open'))
+    vim.keymap.set('n', '<LeftRelease>', single_click_open, opts('Open'))
+end
+
+require('nvim-tree').setup({
+    on_attach = nvim_tree_on_attach,
+    filesystem_watchers = {
+        -- This is causing issues with syncgenerated.
+        enable = false,
+    },
+    diagnostics = {
+        enable = true,
+    },
+})
 
 -- Load backwards-compatible configuration
 vim.cmd.source('~/.vimrc')
