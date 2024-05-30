@@ -203,6 +203,12 @@ lspconfig.clangd.setup({
 lspconfig.gopls.setup({
     cmd = { 'gopls' },
     capabilities = lsp_capabilities,
+    settings = {
+        gopls = {
+            -- Enable semantic token support in gopls
+            semanticTokens = true,
+        },
+    },
 })
 
 lspconfig.tsserver.setup({
