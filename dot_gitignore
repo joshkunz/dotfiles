@@ -9,4 +9,4 @@
 *.orig
 
 # Bazel Paths
-bazel-*
+/bazel-*
