@@ -70,6 +70,9 @@ require('solarized').setup({
 
             -- Variables should be "normal" content quality.
             ['@variable'] = { fg = colors.base0 },
+            -- pretty much everything in starlark is a param, treat them like
+            -- normal variables
+            ['@variable.parameter.starlark'] = { link = '@variable' },
             -- Parameters are purple.
             ['@variable.parameter'] = { link = 'Underlined' },
             ['@lsp.type.parameter'] = { link = '@variable.parameter' },
