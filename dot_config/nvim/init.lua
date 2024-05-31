@@ -95,7 +95,7 @@ require('fzf-lua').setup({
 })
 
 require('trouble').setup {}
-local trouble_telescope = require('trouble.providers.telescope')
+local trouble_telescope = require('trouble.sources.telescope')
 
 require('telescope').setup {
     extensions = {
@@ -108,8 +108,8 @@ require('telescope').setup {
     },
     defaults = {
         mappings = {
-            i = { ['<C-t>'] = trouble_telescope.open_with_trouble },
-            n = { ['<C-t>'] = trouble_telescope.open_with_trouble },
+            i = { ['<C-t>'] = trouble_telescope.open },
+            n = { ['<C-t>'] = trouble_telescope.open },
         }
     }
 }
