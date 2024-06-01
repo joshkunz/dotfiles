@@ -4,10 +4,10 @@
   refreshPeriod: "672h"
   stripComponents: 1
   url: https://github.com/tmux-plugins/tpm/archive/master.tar.gz
-.local/share/nvim/site/pack/packer/start/packer.nvim:
+.local/share/nvim/lazy/lazy.nvim:
   type: git-repo
   refreshPeriod: "672h"
-  url: https://github.com/wbthomason/packer.nvim
+  url: 'https://github.com/folke/lazy.nvim.git'
   clone.args:
-    - "--depth"
-    - "1"
+    - "--filter=blob:none"
+    - "--branch=stable"

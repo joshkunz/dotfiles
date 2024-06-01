@@ -2,6 +2,8 @@
 vim.opt.runtimepath:prepend("~/.vim")
 -- Append ~/.vim/after to serarch path
 vim.opt.runtimepath:append('~/.vim/after')
+-- Prepend lazy package manager
+vim.opt.runtimepath:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 
 -- Disable netrw
 vim.g.loaded_netrw = 1
@@ -10,54 +12,53 @@ vim.g.loaded_netrwPlugin = 1
 -- enable 24-bit colour
 vim.opt.termguicolors = true
 
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use 'neovim/nvim-lspconfig'
-    use 'SirVer/ultisnips'
-    use 'nvim-tree/nvim-web-devicons'
-    use 'nvim-lualine/lualine.nvim'
-    use 'maxmx03/solarized.nvim'
+-- Make leader explicit
+vim.g.mapleader = '\\'
 
-    use {
+require('lazy').setup({
+    'neovim/nvim-lspconfig',
+    'SirVer/ultisnips',
+    'nvim-tree/nvim-web-devicons',
+    'nvim-lualine/lualine.nvim',
+    'maxmx03/solarized.nvim',
+
+    {
         'nvim-telescope/telescope.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/plenary.nvim',
-            { 'nvim-telescope/telescope-fzf-native.nvim',
-                run = table.concat({
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = table.concat({
                     'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release',
                     'cmake --build build --config Release',
                     'cmake --install build --prefix build',
                 }, ' && '),
             },
         },
-    }
+    },
 
+    'nvim-treesitter/nvim-treesitter',
 
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-
-    use {
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
+        dependencies = {
             { 'quangnguyen30192/cmp-nvim-ultisnips' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-emoji' },
         },
-    }
-    use 'kassio/neoterm'
-    use 'mhartington/formatter.nvim'
-    use 'j-hui/fidget.nvim'
-    use 'nvim-treesitter/nvim-treesitter-textobjects'
-    use 'kdheepak/tabline.nvim'
-    use 'folke/trouble.nvim'
-    use 'nvim-tree/nvim-tree.lua'
-    use 'ibhagwan/fzf-lua'
-end)
+    },
 
-if vim.fn.has 'termguicolors' then
-    vim.o.termguicolors = true
-end
+    'kassio/neoterm',
+    'mhartington/formatter.nvim',
+    'j-hui/fidget.nvim',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'kdheepak/tabline.nvim',
+    'folke/trouble.nvim',
+    'nvim-tree/nvim-tree.lua',
+    'ibhagwan/fzf-lua',
+})
 
 vim.opt.background = 'dark'
 require('solarized').setup({
