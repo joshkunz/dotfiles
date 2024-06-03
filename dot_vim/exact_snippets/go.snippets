@@ -1,0 +1,30 @@
+snippet ife if err != nil { ... }
+	if err != nil {
+		${1}
+	}
+
+snippet ifes if err := ...; err != nil { ... }
+	if err := ${1}; err != nil {
+		${2}
+	}
+
+snippet ifer if err != nil { return err }
+	if err != nil {
+		return $0err
+	}
+
+snippet table-driven-test A basic table-driven test layout
+	func Test$1(t *testing.T) {
+		tests := []struct{
+			name string
+			$2
+		}{
+			// Cases here
+		}
+	
+		for _, test := range tests {
+			t.Run(test.name, func (t *testing.T) {
+				$3
+			})
+		}
+	}

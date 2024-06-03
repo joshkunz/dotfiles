@@ -1,7 +1,3 @@
--- Pre-pend ~/.vim to search path
-vim.opt.runtimepath:prepend("~/.vim")
--- Append ~/.vim/after to serarch path
-vim.opt.runtimepath:append('~/.vim/after')
 -- Prepend lazy package manager
 vim.opt.runtimepath:prepend(vim.fn.stdpath('data') .. '/lazy/lazy.nvim')
 
@@ -17,7 +13,12 @@ vim.g.mapleader = '\\'
 
 require('lazy').setup({
     'neovim/nvim-lspconfig',
-    'SirVer/ultisnips',
+
+    {
+        'L3MON4D3/LuaSnip',
+        tag = 'v2.3.0',
+    },
+
     'nvim-tree/nvim-web-devicons',
     'nvim-lualine/lualine.nvim',
     'maxmx03/solarized.nvim',
@@ -42,7 +43,7 @@ require('lazy').setup({
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            { 'quangnguyen30192/cmp-nvim-ultisnips' },
+            { 'saadparwaiz1/cmp_luasnip' },
             { 'hrsh7th/cmp-nvim-lsp' },
             { 'hrsh7th/cmp-buffer' },
             { 'hrsh7th/cmp-path' },
@@ -59,6 +60,11 @@ require('lazy').setup({
     'nvim-tree/nvim-tree.lua',
     'ibhagwan/fzf-lua',
 })
+
+-- Pre-pend ~/.vim to search path
+vim.opt.runtimepath:prepend(vim.env.HOME .. '/.vim')
+-- Append ~/.vim/after to serarch path
+vim.opt.runtimepath:append(vim.env.HOME .. '/.vim/after')
 
 vim.opt.background = 'dark'
 require('solarized').setup({
@@ -86,6 +92,11 @@ require('solarized').setup({
     end,
 })
 vim.cmd.colorscheme('solarized')
+
+local luasnip = require('luasnip')
+require('luasnip.loaders.from_snipmate').lazy_load()
+vim.keymap.set({'i', 'n'}, '<Ctrl-J>', function() luasnip.jump(1) end)
+vim.keymap.set({'i', 'n'}, '<Ctrl-K>', function() luasnip.jump(-1) end)
 
 require('fzf-lua').setup({
     files = {
@@ -157,7 +168,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', 'gi', telescope_builtin.lsp_incoming_calls, opts)
         vim.keymap.set('n', 'go', telescope_builtin.lsp_outgoing_calls, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, opts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
         vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
     end,
@@ -209,12 +220,12 @@ local cmp = require('cmp')
 cmp.setup({
     snippet = {
         expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body)
+            require('luasnip').lsp_expand(args.body)
         end,
     },
     sources = cmp.config.sources(
         {
-            { name = 'ultisnips' },
+            { name = 'luasnip' },
         },
         {
             { name = 'nvim_lsp' },
