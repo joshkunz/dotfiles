@@ -12,6 +12,18 @@ vim.opt.termguicolors = true
 vim.g.mapleader = '\\'
 
 require('lazy').setup({
+    {
+        'folke/lazydev.nvim',
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "luvit-meta/library", words = { "vim%.uv" } },
+            },
+        },
+    },
+
     'neovim/nvim-lspconfig',
 
     {
@@ -59,6 +71,13 @@ require('lazy').setup({
     'folke/trouble.nvim',
     'nvim-tree/nvim-tree.lua',
     'ibhagwan/fzf-lua',
+
+    'mfussenegger/nvim-dap',
+    'leoluz/nvim-dap-go',
+    {
+        'rcarriga/nvim-dap-ui',
+        dependencies = { 'nvim-neotest/nvim-nio' },
+    },
 })
 
 -- Pre-pend ~/.vim to search path
@@ -200,8 +219,8 @@ function begin_append_when_in_term()
 end
 
 vim.cmd([[
-nnoremap <Leader>t <Plug>(neoterm-repl-send-line)
-vnoremap <Leader>t <Plug>(neoterm-repl-send)
+nnoremap <Leader>T <Plug>(neoterm-repl-send-line)
+vnoremap <Leader>T <Plug>(neoterm-repl-send)
 nnoremap <Leader>R :Texec R<Enter>
 
 " terminal binds
@@ -470,6 +489,14 @@ require('nvim-tree').setup({
         enable = true,
     },
 })
+
+require('dap-go').setup({})
+
+require('dapui').setup()
+
+leaders {
+    d = require('dapui').toggle,
+}
 
 -- Load backwards-compatible configuration
 vim.cmd.source('~/.vimrc')
