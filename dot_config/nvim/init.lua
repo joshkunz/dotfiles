@@ -303,9 +303,11 @@ lspconfig.tsserver.setup({
 
 lspconfig.r_language_server.setup({})
 
-local work_cfg = require('workcfg')
-if work_cfg then
+local work_cfg_loaded, work_cfg = pcall(require, 'workcfg')
+if work_cfg_loaded then
     work_cfg.setup_extra_lsp_configs(lsp_capabilities)
+else
+    work_cfg = nil
 end
 
 lspconfig.hls.setup({})
@@ -496,6 +498,11 @@ require('dapui').setup()
 
 leaders {
     d = require('dapui').toggle,
+    dgt = require('dap-go').debug_test,
+    db = require('dap').toggle_breakpoint,
+    dc = require('dap').continue,
+    di = require('dap').step_into,
+    dn = require('dap').step_over,
 }
 
 -- Load backwards-compatible configuration
