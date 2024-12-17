@@ -24,9 +24,11 @@ data:
 {{- else }}
     email: {{ onepasswordRead "op://Private/Josh Kunz/email" }}
 {{- end }}
+{{- if not (dig "no_git" false $work_config) }}
     git:
         host: {{ onepasswordRead "op://Private/Git/host" }}
         maintainanceRepos: {{ dig "maintainanceRepos" nil $work_config | toYaml | nindent 12 }}
+{{- end }}
 {{- else }}
     work: false
     codeRoot: "$HOME/code"
