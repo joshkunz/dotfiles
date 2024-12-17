@@ -19,10 +19,14 @@ data:
 {{- $work_config := include (joinPath .chezmoi.homeDir ".work") | fromYaml }}
     work: true
     codeRoot: "$HOME/stripe"
+{{- if ne (dig "email" nil $work_config) nil }}
+    email: {{ $work_config.email }}
+{{- else }}
     email: {{ onepasswordRead "op://Private/Josh Kunz/email" }}
+{{- end }}
     git:
         host: {{ onepasswordRead "op://Private/Git/host" }}
-        maintainanceRepos: {{ $work_config.maintainanceRepos | toYaml | nindent 12 }}
+        maintainanceRepos: {{ dig "maintainanceRepos" nil $work_config | toYaml | nindent 12 }}
 {{- else }}
     work: false
     codeRoot: "$HOME/code"
