@@ -1,0 +1,19 @@
+font-family = ""
+font-family = "MesloLGS Nerd Font Mono"
+
+font-size = 13.5
+
+font-thicken = true
+font-thicken-strength = 255
+
+adjust-cell-width = "-15%"
+
+theme = "Builtin Solarized Dark"
+
+cursor-style = "block"
+
+window-padding-x = "10,10"
+window-padding-y = "10,10"
+window-padding-balance = true
+
+macos-titlebar-style = "hidden"
