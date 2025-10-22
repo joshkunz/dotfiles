@@ -16,6 +16,13 @@ AppData/**
 
 {{- end }}
 
+# MacOS only configuration files
+{{- if ne .chezmoi.os "darwin" }}
+
+dot_config/ghostty
+
+{{- end }}
+
 {{- if .is_server }}
 # Interactive only configuration
 
@@ -34,12 +41,16 @@ AppData/**
 
 # Work only config
 {{- if not .work }}
+
 .config/fish/conf.d/work_custom.fish
+
 {{- end }}
 
 # Personal only config
 {{- if .work }}
+
 .config/beets
 # We have custom overrides for this, and don't use bazelisk
 .config/fish/functions/bazel.fish
+
 {{- end }}
