@@ -86,3 +86,11 @@
     repo = {{ . }}
     {{- end }}
 {{- end }}
+
+{{- if .work }}
+[hub]
+    host = git.corp.stripe.com
+
+[stripe]
+    gitAddOverrideQuiet = true
+{{- end }}
