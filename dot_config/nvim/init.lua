@@ -276,15 +276,14 @@ function ensure_lsp_capabilities(new)
 end
 ensure_lsp_capabilities(require('cmp_nvim_lsp').default_capabilities())
 
-lspconfig = require('lspconfig')
 
-lspconfig.clangd.setup({
+vim.lsp.config('clangd', {
     cmd = {"clangd", "--background-index"},
     init_options = { clangdFileStatus = true },
     capabilities = lsp_capabilities,
 })
 
-lspconfig.gopls.setup({
+vim.lsp.config('gopls', {
     cmd = { 'gopls' },
     capabilities = lsp_capabilities,
     settings = {
@@ -295,13 +294,14 @@ lspconfig.gopls.setup({
     },
 })
 
-lspconfig.tsserver.setup({
-    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-    cmd = { "typescript-language-server", "--stdio" },
-    capabilities = lsp_capabilities,
-})
+-- 8/7/25 Deprecated, leaving here in-case I want to port it to ts_ls
+--lspconfig.tsserver.setup({
+--    filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+--    cmd = { "typescript-language-server", "--stdio" },
+--    capabilities = lsp_capabilities,
+--})
 
-lspconfig.r_language_server.setup({})
+vim.lsp.config('r_language_server', {})
 
 local work_cfg_loaded, work_cfg = pcall(require, 'workcfg')
 if work_cfg_loaded then
@@ -310,9 +310,9 @@ else
     work_cfg = nil
 end
 
-lspconfig.hls.setup({})
+vim.lsp.config('hls', {})
 
-lspconfig.rust_analyzer.setup({})
+vim.lsp.config('rust_analyzer', {})
 
 --require('lspsaga').setup({
 --    lightbulb = { enable = false },
