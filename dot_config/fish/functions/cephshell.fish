@@ -1,6 +1,6 @@
 function cephshell
     sudo cephadm \
-        --image quay.io/ceph/ceph:v16 \
+        --image quay.io/ceph/ceph:v18 \
         shell \
         --fsid e6849e6e-4ab7-11ed-83fb-ac1f6b7737d2 \
         --config /etc/ceph/ceph.conf \
