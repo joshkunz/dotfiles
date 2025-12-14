@@ -61,18 +61,18 @@
 {{- end }}
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 {{- if not .work }}
 # For GPG Signing of commits
 [credential]
-	helper = cache
+    helper = cache
 
 [commit]
-	gpgsign = true
+    gpgsign = true
 
 [gpg]
-	format = ssh
+    format = ssh
 {{- if get . "is_wsl" }}
 [gpg "ssh"]
     program = "ssh-keygen.exe"
@@ -94,3 +94,10 @@
 [stripe]
     gitAddOverrideQuiet = true
 {{- end }}
+
+{{- if .is_server | and (eq .chezmoi.hostname "apollo") }}
+# On Apollo, we need to trust the deploy repo.
+[safe]
+    directory = /var/local/ygg/src
+{{- end }}
+
