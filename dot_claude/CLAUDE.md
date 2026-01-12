@@ -16,7 +16,8 @@
 
 ## Generally
 
-- Avoid creating empty slice literals. Prefer `var name []T` syntax.
+- Avoid EVER creating empty slice literals. Prefer `var name []T` syntax
+  when declaring, and use `nil` values in structures / assignments.
 - Keep names concise. Avoid repetition with the package name for exported
   symbols.
 
@@ -31,3 +32,4 @@
 - When many tests share the same setup (Arrange) step, and the setup is more than
   10 lines or so, refactor that setup into a test helper: An additional function
   that takes `t *testing.T`, calls `t.Helper()`, and then performs the setup.
+- Use `t.Context()` as the default context rather than `context.Background()`.
