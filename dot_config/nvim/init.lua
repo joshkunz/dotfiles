@@ -66,7 +66,6 @@ require('lazy').setup({
     'kassio/neoterm',
     'mhartington/formatter.nvim',
     'j-hui/fidget.nvim',
-    'nvim-treesitter/nvim-treesitter-textobjects',
     'kdheepak/tabline.nvim',
     'folke/trouble.nvim',
     'nvim-tree/nvim-tree.lua',
@@ -313,69 +312,6 @@ end
 vim.lsp.config('hls', {})
 
 vim.lsp.config('rust_analyzer', {})
-
---require('lspsaga').setup({
---    lightbulb = { enable = false },
---})
-
-require('nvim-treesitter.configs').setup({
-    ensure_installed = {
-        'bash',
-        'c',
-        'cmake',
-        'cpp',
-        'css',
-        'diff',
-        'dockerfile',
-        'dot',
-        'fish',
-        'gitcommit',
-        'gitignore',
-        'go',
-        'gomod',
-        'haskell',
-        'hcl',
-        'html',
-        'http',
-        'java',
-        'javascript',
-        'jq',
-        'json',
-        'json5',
-        'latex',
-        'lua',
-        'make',
-        'markdown',
-        'meson',
-        'ninja',
-        'python',
-        'r',
-        'regex',
-        'rust',
-        'sql',
-        'tsx',
-        'typescript',
-        'vim',
-        'yaml',
-    },
-    autotag = {
-        enable = true,
-    },
-    highlight = {
-        enable = true,
-        disable = { 'cpp' },
-        additional_vim_regex_highlighting = false,
-    },
-    textobjects = {
-        move = {
-            enable = true,
-            set_jumps = true,
-            goto_previous_start = {
-                ['gt'] = '@function.outer',
-            },
-        },
-    },
-})
 
 require('lualine').setup({
     options = {

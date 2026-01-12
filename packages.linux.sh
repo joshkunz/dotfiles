@@ -21,33 +21,7 @@ want_apt_pkgs=(
     tmux
 )
 
-no_homebrew=false
-if [[ "$(uname -m)" = "aarch64" ]]; then
-    # Homebrew only works on amd64
-    no_homebrew=true
-fi
-
-if [[ "${no_homebrew}" = "true" ]]; then
-    # try and add a bunch of equivalent APT packages that are equivalent to
-    # what we'd install via brew.
-    want_apt_pkgs+=(
-        fd-find
-        fish
-        fzf
-        libtree-sitter-dev
-        neovim
-        nodejs
-        ripgrep
-        tree-sitter-cli
-        zoxide
-    )
-fi
-
 sudo apt-get install -y "${want_apt_pkgs[@]}"
-
-if [[ "${no_homebrew}" = "true" ]]; then
-    exit 0
-fi
 
 if ! which brew >/dev/null; then
     # Install homebrew
