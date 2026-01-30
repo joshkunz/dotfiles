@@ -49,9 +49,3 @@ want_brew_pkgs=(
 
 brew update
 brew install "${want_brew_pkgs[@]}"
-
-# Install TPM (tmux) plugins
-~/.tmux/plugins/tpm/bin/install_plugins
-
-# Install Lazy (nvim) plugins
-nvim --headless "+Lazy! sync" +qa

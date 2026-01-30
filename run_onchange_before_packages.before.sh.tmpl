@@ -3,5 +3,5 @@
 set -eou pipefail
 
 {{- if eq .chezmoi.os "linux" }}
-{{ include "packages.linux.sh" }}
+{{ include "packages.linux.before.sh" }}
 {{- end }}

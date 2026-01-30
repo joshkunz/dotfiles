@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -eou pipefail
+
+{{- if eq .chezmoi.os "linux" }}
+{{ include "packages.linux.after.sh" }}
+{{- end }}
