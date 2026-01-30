@@ -16,4 +16,4 @@ window-padding-x = "10,10"
 window-padding-y = "10,10"
 window-padding-balance = true
 
-macos-titlebar-style = "hidden"
+#macos-titlebar-style = "hidden"
