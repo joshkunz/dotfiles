@@ -20,6 +20,9 @@
   when declaring, and use `nil` values in structures / assignments.
 - Keep names concise. Avoid repetition with the package name for exported
   symbols.
+- When arguments are unused use underscore imports. If _all_ arguments are unused,
+  then omit argument names entirely (only including types). Never use underscore
+  imports when all arguments are ignored.
 
 ## For tests
 
