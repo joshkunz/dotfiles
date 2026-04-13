@@ -8,6 +8,7 @@
   type: git-repo
   refreshPeriod: "672h"
   url: 'https://github.com/folke/lazy.nvim.git'
-  clone.args:
-    - "--filter=blob:none"
-    - "--branch=stable"
+  clone:
+    args:
+      - "--filter=blob:none"
+      - "--branch=stable"
