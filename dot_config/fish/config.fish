@@ -99,7 +99,13 @@ if not set -q SSH_AUTH_SOCK
     end
 end
 
-
 #### Zoxide ####
 
 zoxide init fish --cmd cd | source
+
+#### direnv ####
+
+# Hook this shell w/ direnv if it exists on the current system.
+if which -s direnv
+    direnv hook fish | source
+end
