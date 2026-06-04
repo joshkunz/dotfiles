@@ -39,39 +39,24 @@ fish_vi_key_bindings
 
 #### Path Updates ####
 
-function maybe_add_path
-    argparse 'p' -- $argv
-    or return
-
-    # skip if this path doesn't exist
-    not test -d $argv[1]
-    and return 0
-
-    if set -q _flag_p
-        set -p PATH $argv[1]
-    else
-        set -a PATH $argv[1]
-    end
-end
-
-maybe_add_path -p /home/linuxbrew/.linuxbrew/bin
-maybe_add_path /usr/local/bin
-maybe_add_path /usr/local/sbin
-maybe_add_path -p ~/.local/bin
-maybe_add_path $HOME/opt/zig-linux-x86_64-0.4.0 $PATH
-maybe_add_path ~/.cabal/bin
-maybe_add_path -p ~/go/bin
-maybe_add_path /usr/local/go/bin
+fish_add_path /home/linuxbrew/.linuxbrew/bin
+fish_add_path ~/.local/bin
+fish_add_path ~/go/bin
+fish_add_path --append /usr/local/bin
+fish_add_path --append /usr/local/sbin
+fish_add_path --append ~/opt/zig-linux-x86_64-0.4.0
+fish_add_path --append ~/.cabal/bin
+fish_add_path --append /usr/local/go/bin
 
 if test -d ~/.cargo/env
     set -l rust_path (env - bash -c 'source ~/.cargo/env; env' | rg '^PATH=' | tail -c+6 | tr ":" \n)
-    set -a PATH $rust_path
+    fish_add_path --append $rust_path
 end
 
-if test (hostname) = "apollo"
+if test (hostname) = apollo
     set fish_PKG_CONFIG_PATH
-    set -a fish_PKG_CONFIG_PATH "/usr/share/pkgconfig"
-    set -a fish_PKG_CONFIG_PATH "/usr/lib/x86_64-linux-gnu/pkgconfig"
+    set -a fish_PKG_CONFIG_PATH /usr/share/pkgconfig
+    set -a fish_PKG_CONFIG_PATH /usr/lib/x86_64-linux-gnu/pkgconfig
     set -a fish_PKG_CONFIG_PATH "/home/linuxbrew/.linuxbrew/lib/pkgconfig"
     set -gx PKG_CONFIG_PATH (string join ":" $fish_PKG_CONFIG_PATH)
 end
@@ -83,13 +68,13 @@ alias ll "ls -la"
 
 alias grep "grep --color"
 
-alias blaze "bazel"
+alias blaze bazel
 
 alias R "R --no-save"
 
 #### Exports ####
 
-set -x LESS "-FRX"
+set -x LESS -FRX
 
 set -x EDITOR nvim
 set -x PAGER less
