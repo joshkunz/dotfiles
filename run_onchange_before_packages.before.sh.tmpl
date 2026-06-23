@@ -3,5 +3,9 @@
 set -eou pipefail
 
 {{- if eq .chezmoi.os "linux" }}
+{{- if eq .chezmoi.osRelease.id "fedora" }}
+{{ include "packages.fedora.before.sh" }}
+{{- else }}
 {{ include "packages.linux.before.sh" }}
+{{- end }}
 {{- end }}
